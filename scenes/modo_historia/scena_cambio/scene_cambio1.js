@@ -44,7 +44,7 @@ class scene_cambio1 extends Phaser.Scene {
         restartButton.on('pointerdown', () => {
             this.musicWin.stop(); // Detener la música
             this.scene.stop('scene_cambio1');
-            this.scene.start('CaveMap');
+            this.scene.start('EndGameScene');
         });
 
         const mainMenuButton = this.add.image(this.cameras.main.centerX, baseButtonY + buttonSpacing, 'botonregresar').setOrigin(0.5).setInteractive();
