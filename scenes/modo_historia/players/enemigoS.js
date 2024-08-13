@@ -40,7 +40,7 @@ export class EnemigoS {
         this.scene.load.image('dialog', 'assets/img/FIFAS/monedas/diagolo.png');
 
         // Cargar imágenes de moneda real
-        this.scene.load.image('moneda1', '/assets/img/FIFAS/monedas/moneda1.png');
+        this.scene.load.image('moneda1', 'assets/img/FIFAS/monedas/moneda1.png');
         this.scene.load.image('moneda2', 'assets/img/FIFAS/monedas/moneda2.png');
         this.scene.load.image('moneda3', 'assets/img/FIFAS/monedas/moneda3.png');
         this.scene.load.image('moneda4', 'assets/img/FIFAS/monedas/moneda4.png');
