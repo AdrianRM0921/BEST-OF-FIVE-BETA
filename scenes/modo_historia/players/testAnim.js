@@ -105,6 +105,8 @@ export class Player {
             D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
             S: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
             A: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+            K: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K),
+            L: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L),
             W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
         };
     }
@@ -116,37 +118,39 @@ export class Player {
             return;
         }
 
-        this.gamepad = this.scene.input.gamepad.gamepads[0]; // Asegúrate de que el gamepad sea el primero
+        const { D, K, L, A, W } = this.keys;
 
-        if (this.gamepad) {
-            const leftStickX = this.gamepad.axes[0].getValue();
-            const buttonA = this.gamepad.buttons[0].pressed; // A button
+        if (D.isDown || A.isDown) {
+            this.Player.setVelocityX(D.isDown ? 700 : -700);
+            this.Player.play(D.isDown ? 'derecha' : 'izquierda', true);
 
-            if (leftStickX !== 0) {
-                this.Player.setVelocityX(leftStickX * 700);
-                this.Player.play(leftStickX > 0 ? 'derecha' : 'izquierda', true);
-    
-                if (!this.isRunning) {
-                    this.runSound.loop = true;
-                    this.runSound.play();
-                    this.isRunning = true;
-                }
+            if (!this.isRunning) {
+                this.runSound.loop = true;
+                this.runSound.play();
+                this.isRunning = true;
             }
-            else {
-                this.Player.setVelocityX(0);
-                this.Player.play('frente', true);
-    
-                if (this.isRunning) {
-                    this.runSound.stop();
-                    this.isRunning = false;
-                }
+        } else if (K.isDown) {
+            this.Player.play('attacar', true);
+            this.Player.setVelocityX(0);
+            this.hitSound.play();
+        } else if (L.isDown) {
+            this.Player.play('attacarD', true);
+            this.Player.setVelocityX(0);
+            this.hitSound.play();
+        } else {
+            this.Player.setVelocityX(0);
+            this.Player.play('frente', true);
+
+            if (this.isRunning) {
+                this.runSound.stop();
+                this.isRunning = false;
             }
-    
-            if (this.gamepad.axes[1].getValue() < 0 && this.Player.body.blocked.down) {
-                this.Player.setVelocityY(-600);
-                this.Player.play('saltar', true);
-                this.jumpSound.play();
-            }
+        }
+
+        if (W.isDown && this.Player.body.blocked.down) {
+            this.Player.setVelocityY(-600);
+            this.Player.play('saltar', true);
+            this.jumpSound.play();
         }
     }
 
@@ -219,4 +223,5 @@ export class Player {
         this.scene.physics.pause();
     }
 }
+
 
